@@ -2,38 +2,79 @@
 <html>
 <head>
     <title>Location Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <h1>Tracking Your Location...</h1>
-    <script>
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(position => {
-                const location = {
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude,
-                    timestamp: position.timestamp
-                };
+    <div class="container">
+        <h1>Welcome to Location Tracker</h1>
+        <p>This is a simple website to track your location.</p>
+        <button id="trackButton">Track My Location</button>
+    </div>
 
-                fetch('/location', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(location)
-                })
-                .then(response => {
-                    if (response.ok) {
-                        console.log('Location data sent successfully');
-                    } else {
-                        console.error('Error sending location data');
-                    }
+    <script>
+        document.getElementById('trackButton').addEventListener('click', () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    const location = {
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude,
+                        timestamp: position.timestamp
+                    };
+
+                    fetch('/location', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(location)
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            console.log('Location data sent successfully');
+                        } else {
+                            console.error('Error sending location data');
+                        }
+                    });
+                }, error => {
+                    console.error('Error getting location:', error);
                 });
-            }, error => {
-                console.error('Error getting location:', error);
-            });
-        } else {
-            console.error('Geolocation is not supported by this browser.');
-        }
+            } else {
+                console.error('Geolocation is not supported by this browser.');
+            }
+        });
     </script>
 </body>
 </html>
