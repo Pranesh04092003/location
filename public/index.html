@@ -1,80 +1,117 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Location Tracker</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f0f0f0;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Website</title>
+    <link rel="stylesheet" href="styles.css">
+    /* Resetting default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        .container {
-            text-align: center;
-        }
+/* Basic styling for header */
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+}
 
-        h1 {
-            margin-bottom: 20px;
-        }
+header h1 {
+    margin: 0;
+}
 
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+nav ul {
+    list-style-type: none;
+}
 
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Styling for featured products section */
+.featured-products {
+    margin: 50px auto;
+    text-align: center;
+}
+
+.featured-products h2 {
+    margin-bottom: 20px;
+}
+
+.product {
+    display: inline-block;
+    margin: 0 10px;
+    text-align: center;
+}
+
+.product img {
+    width: 200px;
+    height: 200px;
+    border: 1px solid #ccc;
+}
+
+.product h3 {
+    margin-top: 10px;
+}
+
+.product p {
+    font-weight: bold;
+    color: #555;
+}
+
+/* Basic styling for footer */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome to Location Tracker</h1>
-        <p>This is a simple website to track your location.</p>
-        <button id="trackButton">Track My Location</button>
-    </div>
+    <header>
+        <h1>Shopping Website</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Shop</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <script>
-        document.getElementById('trackButton').addEventListener('click', () => {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(position => {
-                    const location = {
-                        latitude: position.coords.latitude,
-                        longitude: position.coords.longitude,
-                        timestamp: position.timestamp
-                    };
+    <main>
+        <section class="featured-products">
+            <h2>Featured Products</h2>
+            <div class="product">
+                <img src="product1.jpg" alt="Product 1">
+                <h3>Product 1</h3>
+                <p>$19.99</p>
+            </div>
+            <div class="product">
+                <img src="product2.jpg" alt="Product 2">
+                <h3>Product 2</h3>
+                <p>$29.99</p>
+            </div>
+            <!-- More products can be added here -->
+        </section>
+    </main>
 
-                    fetch('/location', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(location)
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            console.log('Location data sent successfully');
-                        } else {
-                            console.error('Error sending location data');
-                        }
-                    });
-                }, error => {
-                    console.error('Error getting location:', error);
-                });
-            } else {
-                console.error('Geolocation is not supported by this browser.');
-            }
-        });
-    </script>
+    <footer>
+        <p>&copy; 2024 Shopping Website. All rights reserved.</p>
+    </footer>
 </body>
 </html>
